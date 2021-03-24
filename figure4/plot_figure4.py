@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar  4 14:06:17 2021
+Created on Mon Feb 22 08:52:13 2021
 
 @author: User
 """
 
 import matplotlib.pyplot as plt
 # plt.style.use('ggplot')
-import os, sys
+from glob import glob
+import os
 import numpy as np
+import pandas as pd
 
-sys.path.append('..')
-import functions
+os.chdir(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\protein_lipid_assays\bLG')
+figuredir = r'C:\Users\User\Documents\08_publications\20210220_ijms\figure4'
 
-cm = plt.get_cmap('cool')
-
+#%%%%%%%%%% Common variables %%%%%%%%%%%%%%
 def generate_clist(NUM_COLORS):
     import pylab
     
@@ -22,101 +23,111 @@ def generate_clist(NUM_COLORS):
     color = [cm(1-1.*i/NUM_COLORS) for i in range(NUM_COLORS)]
     
     return color
+#%% Figure 4A 10 POPE
+spectra = ["20210302_TK_BLAC_30_10_MS_0_ms.txt",
+           "20210302_TK_C8E4_15_POPE_BLAC_30_10_NB_M2_0_ms.txt",
+           "20210302_TK_LDAO_15_POPE_BLAC_30_10_NB_M1_0_ms.txt",
+           "20210302_TK_OG_15_POPE_BLAC_30_10_1CMC_NB_M1_0_ms.txt"]
 
-os.chdir(r'C:\Users\User\Documents\08_publications\20210220_ijms\figure4')
+colors = generate_clist(len(spectra))
 
-#%% Figure4 Overview of spectra
-
-spectra = ["20210303_TK_MYO_30_10_CV10__MS1_0_ms.txt",
-           # "20210303_TK_MYO_80_80_M1_0_ms.txt",
-           # "20210303_TK_C8E4_MYO_80_80_MS2_0_ms.txt",
-            "20210303_TK_C8E4_MYO_30_10_MS1_0_ms.txt",
-            "20210303_TK_LDAO_MYO_30_10_CV10_NANO_MS1_0_ms.txt",
-           # "20210303_TK_LDAO_MYO_80_80_CV10_NANO_MS1_0_ms.txt",
-           '20210309_TK_OG_MYO_30_10_CV10_MS1_0_ms.txt'
-           # "20210303_TK_OG_MYO_80_80_CV10_1CMC_MS1_0_ms.txt"
-           ]
-
-spectra = [os.path.abspath(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\protein_detergent_native_ms/' + s) for s in spectra]
-
-colors = generate_clist(len(spectra)+1)
-
-zoom_1 = (500, 700)
-zoom_2 = (1600, 3500)
-
-fig, axs = plt.subplots(len(spectra),2, figsize=(4,4),
-                        gridspec_kw={'width_ratios': [zoom_1[1]-zoom_1[0], zoom_2[1]-zoom_2[0]]},
-                        squeeze=False, frameon=False, sharey=True, sharex='col')
+fig, axs = plt.subplots(len(spectra),1, figsize=(6,4), squeeze=True, frameon=False, sharex=True)
 
 for ib, s in enumerate(spectra):
-    mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
-    intens = 100*intens/intens.max() # relative intensity
-    axs[ib, 0].plot(mz, intens, color=colors[ib])
-    axs[ib, 1].plot(mz, intens, color=colors[ib], label=os.path.split(s)[-1][-30:])
+        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        intens = 100*intens/intens[mz>1700].max() # relative intensity
+        l  = axs[ib].plot(mz, intens, color=colors[ib], label=s)
 
-    axs[ib, 1].legend()
-    axs[ib, 0].set_ylim([0,110])
-    axs[ib, 0].set_xlim(zoom_1)
-    axs[ib, 1].set_ylim([0,110])
-    axs[ib, 1].set_xlim(zoom_2)
-    
-    
-    # hide the spines between ax and ax2
-    axs[ib, 0].spines['right'].set_visible(False)
-    axs[ib, 1].spines['left'].set_visible(False)
-    axs[ib, 0].yaxis.tick_left()
-    # axs[ib, 0].tick_params(labeltop='off') # don't put tick labels at the top
-    axs[ib, 1].yaxis.tick_right()
-    
-# Make the spacing between the two axes a bit smaller
-plt.subplots_adjust(wspace=0.15)
+        axs[ib].legend()
+        axs[ib].set_ylim([0,110])
+        axs[ib].set_xlim([1700,4500])
 
-plt.tight_layout()
-plt.savefig('figure4.pdf')
+
+plt.savefig(os.path.join(figuredir, 'figure4.pdf'))
 plt.show()
 
-#%% Figure 4B IMS
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R1\*MYO*.csv',
-                     17550,
-                     100,
-                     10,
-                     'figure4B',
-                     ylim=(60,130),
-                     # figsize=(4,2),
-                     xlim=[10,90],
-                     title_label="Myoglobin Heme-bound R1")
+#%% Figure 4B: 20 POPE
+spectra = ["20210302_TK_BLAC_30_10_MS_0_ms.txt",
+           "20210302_TK_C8E4_25_POPE_BLAC_30_10_NB_M2_0_ms.txt",
+           "20210302_TK_LDAO_25_POPE_BLAC_30_10_M1_0_ms.txt",
+           "20210302_TK_OG_25_POPE_BLAC_30_10_1CMC_NB_M1_0_ms.txt"]
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R1\*MYO*.csv',
-                     17550,
-                     100,
-                     10,
-                     'figure4B_z8',
-                     ylim=(60,130),
-                     charge=8,
-                     xlim=[10,90],
-                     # figsize=(4,2),
-                     title_label="Myoglobin Heme-bound charge 8 R1")
+colors = generate_clist(len(spectra))
 
-#%% Figure 4C Myo R2 IMS
+fig, axs = plt.subplots(len(spectra),1, figsize=(6,4), squeeze=True, frameon=False, sharex=True)
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R2\*MYO*.csv',
-                     17550,
-                     100,
-                     10,
-                     'figure4C',
-                     ylim=(60,130),
-                     xlim=[10,90],
-                     # figsize=(4,2),
-                     title_label="Myoglobin Heme-bound R2")
+for ib, s in enumerate(spectra):
+        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        intens = 100*intens/intens[mz>1700].max() # relative intensity
+        l  = axs[ib].plot(mz, intens, color=colors[ib], label=s)
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R2\*MYO*.csv',
-                     17550,
-                     100,
-                     10,
-                     'figure4C_z8',
-                     ylim=(60,130),
-                     charge=8,
-                     xlim=[10,90],
-                     # figsize=(4,2),
-                     title_label="Myoglobin Heme-bound charge 8 R2")
+        axs[ib].legend()
+        axs[ib].set_ylim([0,110])
+        axs[ib].set_xlim([1700,4500])
+
+
+plt.savefig(os.path.join(figuredir, 'figure4B.pdf'))
+plt.show()
+
+
+#%% Figure 4C part1
+
+fig, ax = plt.subplots(1,1, figsize=(2,2))
+
+spectra = ["20210302_TK_C8E4_10_POPE_BLAC_30_10_NB_MS2_0_ms.txt",
+           "20210302_TK_C8E4_15_POPE_BLAC_30_10_NB_M2_0_ms.txt",
+           "20210302_TK_C8E4_25_POPE_BLAC_30_10_NB_M2_0_ms.txt",
+           "20210302_TK_C8E4_50_POPE_BLAC_30_10_NB_M2_0_ms.txt"]
+
+for ib, s in enumerate(spectra):
+        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        intens = 100*intens/intens[mz>3500].max() # relative intensity
+        l  = ax.plot(mz, intens, color=colors[ib], label=s)
+
+ax.set_ylim([0,110])
+ax.set_xlim([3500,4500])
+
+plt.savefig(os.path.join(figuredir, 'figure4C-1.pdf'))
+plt.show()
+
+
+#%% Figure 4C part2
+
+fig, ax = plt.subplots(1,1, figsize=(2,2))
+
+spectra = ["20210302_TK_LDAO_10_POPE_BLAC_30_10_NB_M1_0_ms.txt",
+           "20210302_TK_LDAO_15_POPE_BLAC_30_10_NB_M1_0_ms.txt",
+           "20210302_TK_LDAO_25_POPE_BLAC_30_10_NB_M1_0_ms.txt",
+           "20210302_TK_LDAO_50_POPE_BLAC_30_10_M2_0_ms.txt"]
+
+for ib, s in enumerate(spectra):
+        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        intens = 100*intens/intens[mz>3500].max() # relative intensity
+        l  = ax.plot(mz, intens, color=colors[ib], label=s)
+
+ax.set_ylim([0,110])
+ax.set_xlim([3500,4500])
+
+plt.savefig(os.path.join(figuredir, 'figure4C-2.pdf'))
+plt.show()
+
+#%% Figure 4C part3
+
+fig, ax = plt.subplots(1,1, figsize=(2,2))
+
+spectra = ["20210302_TK_OG_10_POPE_BLAC_30_10_1CMC_NB_M1_0_ms.txt",
+           "20210302_TK_OG_15_POPE_BLAC_30_10_1CMC_NB_M1_0_ms.txt",
+           "20210302_TK_OG_25_POPE_BLAC_30_10_1CMC_NB_M1_0_ms.txt",
+           "20210302_TK_OG_50_POPE_BLAC_30_10_1cmc_NB_M1_0_ms.txt"]
+
+for ib, s in enumerate(spectra):
+        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        intens = 100*intens/intens[mz>3500].max() # relative intensity
+        l  = ax.plot(mz, intens, color=colors[ib], label=s)
+
+ax.set_ylim([0,110])
+ax.set_xlim([3500,4500])
+
+plt.savefig(os.path.join(figuredir, 'figure4C-3.pdf'))
+plt.show()

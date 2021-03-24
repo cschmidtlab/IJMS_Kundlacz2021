@@ -74,7 +74,7 @@ subs, av = ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergen
                      "ADH R1",
                      figsize=(4,4))
 
-#%% Figure 2C: BSA IMS R1
+#%% Figure 2Sup1: BSA IMS R1
 
 subs, av= ims_plot([r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\BSA_R1\20210225_TK_BSA_80_80.csv',
                   r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\BSA_R1\20210225_TK_C8E4_BSA_80_80.csv',
@@ -83,14 +83,14 @@ subs, av= ims_plot([r'C:\Users\User\Documents\02_experiments\16_protein_detergen
                  66000,
                  2000,
                  10,
-                 "figure2C",
+                 "figure2Sup1",
                  "BSA R1")
 
-#%% Fig 2D: ADH IMS R2
+#%% Fig 2Sup2: ADH IMS R2
 
 subs, av = ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\ADH_R2\*ADH*.csv',
                      147000,
                      2000,
                      10,
-                     "figure2D",
+                     "figure2Sup2",
                      "ADH R2")

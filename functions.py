@@ -27,7 +27,7 @@ def weighted_avg_and_std(values, weights):
     return average, np.sqrt(variance)
 
 def ims_plot(fpath, mass, tolerance, norm_cv, outname, title_label=None,
-             charge=None, figsize=None, ylim=None, xlim=None):
+             charge=None, figsize=None, ylim=None, xlim=None, legend=True):
     """
     Plot IMS unfolding plot by normalising to drift time at certain collision
     voltage
@@ -146,7 +146,9 @@ def ims_plot(fpath, mass, tolerance, norm_cv, outname, title_label=None,
         subsets.append(subset)
         averages.append(average)
 
-    plt.legend()
+    if legend:
+        plt.legend()
+
     if not title_label:
         title_label = ' '.join(fpath.split(os.path.sep)[-2:])
     ax.set_title(title_label)
