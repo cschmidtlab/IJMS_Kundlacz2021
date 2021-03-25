@@ -75,6 +75,48 @@ plt.tight_layout()
 plt.savefig('figure3.pdf')
 plt.show()
 
+#%% figure3 zoom for sup
+
+spectra = ["20210303_TK_MYO_30_10_CV10__MS1_0_ms.txt",
+           # "20210303_TK_MYO_80_80_M1_0_ms.txt",
+           # "20210303_TK_C8E4_MYO_80_80_MS2_0_ms.txt",
+            "20210303_TK_C8E4_MYO_30_10_MS1_0_ms.txt",
+            "20210303_TK_LDAO_MYO_30_10_CV10_NANO_MS1_0_ms.txt",
+           # "20210303_TK_LDAO_MYO_80_80_CV10_NANO_MS1_0_ms.txt",
+           '20210309_TK_OG_MYO_30_10_CV10_MS1_0_ms.txt'
+           # "20210303_TK_OG_MYO_80_80_CV10_1CMC_MS1_0_ms.txt"
+           ]
+
+spectra = [os.path.abspath(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\protein_detergent_native_ms/' + s) for s in spectra]
+
+colors = generate_clist(len(spectra)+1)
+
+zoom_2 = (1600, 3500)
+
+fig, axs = plt.subplots(len(spectra),1, figsize=(4,4),
+                        squeeze=False, frameon=False, sharey=True, sharex='col')
+
+for ib, s in enumerate(spectra):
+    mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+    intens = 100*intens/intens.max() # relative intensity
+    axs[ib,0].plot(mz, intens, color=colors[ib], label=os.path.split(s)[-1][-30:])
+
+    axs[ib, 0].legend()
+
+    axs[ib, 0].set_ylim([0,110])
+    axs[ib, 0].set_xlim(zoom_2)
+    
+# Make the spacing between the two axes a bit smaller
+plt.subplots_adjust(wspace=0.15)
+
+plt.tight_layout()
+plt.savefig('figure3_zoom.pdf')
+plt.savefig('figure3_zoom.png')
+
+plt.show()
+
+
+
 #%% Figure 3B Myo IMS
 
 functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R1\*MYO*.csv',
