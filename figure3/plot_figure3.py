@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import os, sys
 import numpy as np
 
+os.chdir(r'C:\Users\User\Documents\08_publications\20210220_ijms\figure3')
 sys.path.append('..')
 import functions
 
@@ -91,15 +92,15 @@ spectra = [os.path.abspath(r'C:\Users\User\Documents\02_experiments\16_protein_d
 
 colors = generate_clist(len(spectra)+1)
 
-zoom_2 = (1600, 3500)
+zoom_2 = (2000, 2300)
 
 fig, axs = plt.subplots(len(spectra),1, figsize=(4,4),
                         squeeze=False, frameon=False, sharey=True, sharex='col')
 
 for ib, s in enumerate(spectra):
     mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
-    intens = 100*intens/intens.max() # relative intensity
-    axs[ib,0].plot(mz, intens, color=colors[ib], label=os.path.split(s)[-1][-30:])
+    intens = 100*intens/intens[(mz>zoom_2[0]) & (mz < zoom_2[1])].max() # relative intensity
+    axs[ib,0].plot(mz, intens, color=colors[ib], label=s.split('_')[10])
 
     axs[ib, 0].legend()
 
