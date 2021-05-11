@@ -34,6 +34,14 @@ def group_by_sum(x):
     s = np.bincount(idx, weights = x[:,1])
     return np.c_[u, s]
 
+def group_by_sum(x):
+    """
+    Required as MassLync saves multiple data per m/z bin
+    """
+    u, idx = np.unique(x[:,0], return_inverse=True)
+    s = np.bincount(idx, weights = x[:,1])
+    return np.c_[u, s]
+
 for ia, p in enumerate(panels):
     spectra = glob(r'{}\*.txt'.format(p))
     for ib, s in enumerate(spectra):
