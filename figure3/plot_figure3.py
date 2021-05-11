@@ -24,8 +24,6 @@ def generate_clist(NUM_COLORS):
     
     return color
 
-os.chdir(r'C:\Users\User\Documents\08_publications\20210220_ijms\figure3')
-
 #%% figure3 Overview of spectra
 
 spectra = ["20210303_TK_MYO_30_10_CV10__MS1_0_ms.txt",
@@ -38,7 +36,7 @@ spectra = ["20210303_TK_MYO_30_10_CV10__MS1_0_ms.txt",
            # "20210303_TK_OG_MYO_80_80_CV10_1CMC_MS1_0_ms.txt"
            ]
 
-spectra = [os.path.abspath(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\protein_detergent_native_ms/' + s) for s in spectra]
+spectra = [os.path.abspath('../data/figure3/spectra_overview/' + s) for s in spectra]
 
 colors = generate_clist(len(spectra)+1)
 
@@ -88,7 +86,7 @@ spectra = ["20210303_TK_MYO_30_10_CV10__MS1_0_ms.txt",
            # "20210303_TK_OG_MYO_80_80_CV10_1CMC_MS1_0_ms.txt"
            ]
 
-spectra = [os.path.abspath(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\protein_detergent_native_ms/' + s) for s in spectra]
+spectra = [os.path.abspath('../data/figure3/spectra_overview/' + s) for s in spectra]
 
 colors = generate_clist(len(spectra)+1)
 
@@ -117,10 +115,9 @@ plt.savefig('figure3_zoom.png')
 plt.show()
 
 
-
 #%% Figure 3B Myo IMS
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R1\*MYO*.csv',
+functions.ims_plot(r'../data/figure3/MYO_R1/*MYO*.csv',
                      17550,
                      100,
                      10,
@@ -130,7 +127,7 @@ functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent
                      xlim=[10,90],
                      title_label="Myoglobin Heme-bound R1")
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R1\*MYO*.csv',
+functions.ims_plot(r'../data/figure3/MYO_R1/*MYO*.csv',
                      17550,
                      100,
                      10,
@@ -143,7 +140,7 @@ functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent
 
 #%% Figure S3 Myo R2 IMS
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R2\*MYO*.csv',
+functions.ims_plot(r'../data/figure3/MYO_R2/*MYO*.csv',
                      17550,
                      100,
                      10,
@@ -154,7 +151,7 @@ functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent
                      # figsize=(4,2),
                      title_label="Myoglobin Heme-bound R2")
 
-functions.ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\MYO_R2\*MYO*.csv',
+functions.ims_plot(r'../data/figure3/MYO_R2/*MYO*.csv',
                      17550,
                      100,
                      10,

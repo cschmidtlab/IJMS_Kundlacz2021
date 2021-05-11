@@ -11,17 +11,20 @@ from glob import glob
 import os, sys
 import numpy as np
 
+os.chdir(r'C:\Users\User\Documents\08_publications\20210220_ijms\figure2')
+
 sys.path.append('..')
 from functions import *
 
-os.chdir(r'C:\Users\User\Documents\08_publications\20210220_ijms\figure2')
-
-panels = [x for x in os.listdir() if os.path.isdir(x) and not (x.startswith('.') or x.startswith('__'))]
-fig, axs = plt.subplots(4,len(panels), figsize=(8,5), squeeze=False, frameon=False)
+#%% Figure2: Overview of spectra
+datadir = '../data/figure2/spectra_overview'
+panels = [os.path.join(datadir, x) for x in os.listdir(datadir)]
+fig, axs = plt.subplots(4,len(panels),
+                        figsize=(8,5),
+                        squeeze=False,
+                        frameon=False)
 
 cm = plt.get_cmap('cool')
-
-#%% Figure2: Overview of spectra
 
 def group_by_sum(x):
     """
@@ -32,7 +35,7 @@ def group_by_sum(x):
     return np.c_[u, s]
 
 for ia, p in enumerate(panels):
-    spectra = glob('{}/*.txt'.format(p))
+    spectra = glob(r'{}\*.txt'.format(p))
     for ib, s in enumerate(spectra):
         d = np.genfromtxt(s, delimiter='\t', unpack=False)
         mz, intens = group_by_sum(d).T
@@ -75,7 +78,7 @@ plt.show()
 
 #%% Figure 2B: ADH IMS R1
 
-subs, av = ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\ADH_R1\*ADH*.csv',
+subs, av = ims_plot(r'../data/figure2/ADH_R1/*ADH*.csv',
                      147000,
                      2000,
                      30,
@@ -85,10 +88,10 @@ subs, av = ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergen
 
 #%% Figure 2Sup1: BSA IMS R1
 
-subs, av= ims_plot([r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\BSA_R1\20210225_TK_BSA_80_80.csv',
-                  r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\BSA_R1\20210225_TK_C8E4_BSA_80_80.csv',
-                  r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\BSA_R1\20210225_TK_LDAO_BSA_80_80.csv',
-                  r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\BSA_R1\20210225_TK_OG_BSA_80_80_1CMC.csv'],
+subs, av= ims_plot(['../data/figure2/BSA_R1/20210225_TK_BSA_80_80.csv',
+                    '../data/figure2/BSA_R1/20210225_TK_C8E4_BSA_80_80.csv',
+                    '../data/figure2/BSA_R1/20210225_TK_LDAO_BSA_80_80.csv',
+                    '../data/figure2/BSA_R1/20210225_TK_OG_BSA_80_80_1CMC.csv'],
                  66000,
                  2000,
                  10,
@@ -97,7 +100,7 @@ subs, av= ims_plot([r'C:\Users\User\Documents\02_experiments\16_protein_detergen
 
 #%% Fig 2Sup2: ADH IMS R2
 
-subs, av = ims_plot(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\detergent_ims\ADH_R2\*ADH*.csv',
+subs, av = ims_plot(r'../data/figure2/ADH_R2/*ADH*.csv',
                      147000,
                      2000,
                      10,

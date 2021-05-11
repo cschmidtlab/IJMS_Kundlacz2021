@@ -12,8 +12,9 @@ import os
 import numpy as np
 import pandas as pd
 
-os.chdir(r'C:\Users\User\Documents\02_experiments\16_protein_detergent_native_ms\analysis\protein_lipid_assays\bLG')
-figuredir = r'C:\Users\User\Documents\08_publications\20210220_ijms\figure4'
+os.chdir(r'C:\Users\User\Documents\08_publications\20210220_ijms\figure4')
+
+datadir = '../data/figure4/'
 
 #%%%%%%%%%% Common variables %%%%%%%%%%%%%%
 def generate_clist(NUM_COLORS):
@@ -34,7 +35,7 @@ colors = generate_clist(len(spectra))
 fig, axs = plt.subplots(len(spectra),1, figsize=(6,4), squeeze=True, frameon=False, sharex=True)
 
 for ib, s in enumerate(spectra):
-        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        mz, intens = np.genfromtxt(datadir + s, delimiter=' ', unpack=True)
         intens = 100*intens/intens[mz>1700].max() # relative intensity
         l  = axs[ib].plot(mz, intens, color=colors[ib], label=s)
 
@@ -43,7 +44,7 @@ for ib, s in enumerate(spectra):
         axs[ib].set_xlim([1700,4500])
 
 
-plt.savefig(os.path.join(figuredir, 'figure4.pdf'))
+plt.savefig(os.path.join('figure4.pdf'))
 plt.show()
 
 
@@ -58,7 +59,7 @@ colors = generate_clist(len(spectra))
 fig, axs = plt.subplots(len(spectra),1, figsize=(6,4), squeeze=True, frameon=False, sharex=True)
 
 for ib, s in enumerate(spectra):
-        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        mz, intens = np.genfromtxt(datadir + s, delimiter=' ', unpack=True)
         intens = 100*intens/intens[mz>1700].max() # relative intensity
         l  = axs[ib].plot(mz, intens, color=colors[ib], label=s)
 
@@ -67,7 +68,7 @@ for ib, s in enumerate(spectra):
         axs[ib].set_xlim([1700,4500])
 
 
-plt.savefig(os.path.join(figuredir, 'figure4B.pdf'))
+plt.savefig(os.path.join('figure4B.pdf'))
 plt.show()
 
 
@@ -81,14 +82,14 @@ spectra = ["20210302_TK_C8E4_10_POPE_BLAC_30_10_NB_MS2_0_ms.txt",
            "20210302_TK_C8E4_50_POPE_BLAC_30_10_NB_M2_0_ms.txt"]
 
 for ib, s in enumerate(spectra):
-        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        mz, intens = np.genfromtxt(datadir+s, delimiter=' ', unpack=True)
         intens = 100*intens/intens[mz>3500].max() # relative intensity
         l  = ax.plot(mz, intens, color=colors[ib], label=s)
 
 ax.set_ylim([0,110])
 ax.set_xlim([3500,4500])
 
-plt.savefig(os.path.join(figuredir, 'figure4C-1.pdf'))
+plt.savefig(os.path.join('figure4C-1.pdf'))
 plt.show()
 
 
@@ -102,14 +103,14 @@ spectra = ["20210302_TK_LDAO_10_POPE_BLAC_30_10_NB_M1_0_ms.txt",
            "20210302_TK_LDAO_50_POPE_BLAC_30_10_M2_0_ms.txt"]
 
 for ib, s in enumerate(spectra):
-        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        mz, intens = np.genfromtxt(datadir+s, delimiter=' ', unpack=True)
         intens = 100*intens/intens[mz>3500].max() # relative intensity
         l  = ax.plot(mz, intens, color=colors[ib], label=s)
 
 ax.set_ylim([0,110])
 ax.set_xlim([3500,4500])
 
-plt.savefig(os.path.join(figuredir, 'figure4C-2.pdf'))
+plt.savefig(os.path.join('figure4C-2.pdf'))
 plt.show()
 
 #%% Figure 4C part3
@@ -122,12 +123,12 @@ spectra = ["20210302_TK_OG_10_POPE_BLAC_30_10_1CMC_NB_M1_0_ms.txt",
            "20210302_TK_OG_50_POPE_BLAC_30_10_1cmc_NB_M1_0_ms.txt"]
 
 for ib, s in enumerate(spectra):
-        mz, intens = np.genfromtxt(s, delimiter=' ', unpack=True)
+        mz, intens = np.genfromtxt(datadir+s, delimiter=' ', unpack=True)
         intens = 100*intens/intens[mz>3500].max() # relative intensity
         l  = ax.plot(mz, intens, color=colors[ib], label=s)
 
 ax.set_ylim([0,110])
 ax.set_xlim([3500,4500])
 
-plt.savefig(os.path.join(figuredir, 'figure4C-3.pdf'))
+plt.savefig(os.path.join('figure4C-3.pdf'))
 plt.show()
