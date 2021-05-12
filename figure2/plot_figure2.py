@@ -36,7 +36,7 @@ def group_by_sum(x):
 
 def group_by_sum(x):
     """
-    Required as MassLync saves multiple data per m/z bin
+    Required as MassLynx saves multiple data per m/z bin
     """
     u, idx = np.unique(x[:,0], return_inverse=True)
     s = np.bincount(idx, weights = x[:,1])
@@ -114,3 +114,44 @@ subs, av = ims_plot(r'../data/figure2/ADH_R2/*ADH*.csv',
                      10,
                      "figure2Sup2",
                      "ADH R2")
+
+#%% Figure 2 Sup3: Drift time distributinos at 20V and 90V
+from itertools import groupby
+
+datadir = '../data/figure2/CIU_ADH_R1/'
+
+pairs = [list(i) for j,i in groupby(os.listdir(datadir),
+                                    lambda a: a[:-9])]
+for p in pairs:
+    fig = plt.figure()
+    ax = plt.gca()
+    for f in p:
+        d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
+        d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-12:-4])
+    
+    ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Rel. Intensity')
+    ax.set_xlabel('Drift time [ms]')
+    plt.legend()
+    plt.savefig(str(f[:-9]) + '_R1_plot.pdf')
+
+
+datadir = '../data/figure2/CIU_ADH_R2/'
+
+pairs = [list(i) for j,i in groupby(os.listdir(datadir),
+                                    lambda a: a[:-9])]
+for p in pairs:
+    fig = plt.figure()
+    ax = plt.gca()
+    for f in p:
+        d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
+        d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-12:-4])
+    
+    ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Rel. Intensity')
+    ax.set_xlabel('Drift time [ms]')
+    plt.legend()
+    plt.savefig(str(f[:-9]) + '_R2_plot.pdf')
+        
