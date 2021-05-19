@@ -162,3 +162,44 @@ functions.ims_plot(r'../data/figure3/MYO_R2/*MYO*.csv',
                      legend=False,
                      # figsize=(4,2),
                      title_label="Myoglobin Heme-bound charge 8 R2")
+
+#%% Figure 2 Sup3: Drift time distributinos at 20V and 90V
+from itertools import groupby
+
+datadir = '../data/figure3/CIU_MYO_R1/'
+
+pairs = [list(i) for j,i in groupby(os.listdir(datadir),
+                                    lambda a: a[:-9])]
+for p in pairs:
+    fig, ax = plt.subplots(1,1, figsize=(3,3))
+    for f in p:
+        d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
+        #d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-8:-4])
+        
+    ax.legend()
+    # ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Intensity')
+    ax.set_xlabel('Drift time [ms]')
+    plt.tight_layout()
+    plt.savefig(str(f[:-9]) + '_R1_plot.pdf')
+
+
+datadir = '../data/figure3/CIU_MYO_R2/'
+
+pairs = [list(i) for j,i in groupby(os.listdir(datadir),
+                                    lambda a: a[:-9])]
+for p in pairs:
+    fig, ax = plt.subplots(1,1, figsize=(3,3))
+    for f in p:
+        d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
+        #d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-8:-4])
+        
+    ax.legend()
+    # ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Intensity')
+    ax.set_xlabel('Drift time [ms]')
+    plt.tight_layout()
+    plt.savefig(str(f[:-9]) + '_R2_plot.pdf')
+        

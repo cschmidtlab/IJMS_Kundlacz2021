@@ -115,7 +115,7 @@ subs, av = ims_plot(r'../data/figure2/ADH_R2/*ADH*.csv',
                      "figure2Sup2",
                      "ADH R2")
 
-#%% Figure 2 Sup3: Drift time distributinos at 20V and 90V
+#%% Figure 2 Sup3: Drift time distributions at 20V and 90V
 from itertools import groupby
 
 datadir = '../data/figure2/CIU_ADH_R1/'
@@ -123,17 +123,18 @@ datadir = '../data/figure2/CIU_ADH_R1/'
 pairs = [list(i) for j,i in groupby(os.listdir(datadir),
                                     lambda a: a[:-9])]
 for p in pairs:
-    fig = plt.figure()
+    fig = plt.figure(figsize=(3,3))
     ax = plt.gca()
     for f in p:
         d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
-        d[1] = 100*d[1]/d[1].max()
-        ax.plot(d[0], d[1], label=f[-12:-4])
+        # d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-8:-4])
     
-    ax.set_title(f.split('_')[2])
-    ax.set_ylabel('Rel. Intensity')
+    # ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Intensity')
     ax.set_xlabel('Drift time [ms]')
     plt.legend()
+    plt.tight_layout()
     plt.savefig(str(f[:-9]) + '_R1_plot.pdf')
 
 
@@ -142,16 +143,58 @@ datadir = '../data/figure2/CIU_ADH_R2/'
 pairs = [list(i) for j,i in groupby(os.listdir(datadir),
                                     lambda a: a[:-9])]
 for p in pairs:
-    fig = plt.figure()
+    fig = plt.figure(figsize=(3,3))
     ax = plt.gca()
     for f in p:
         d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
-        d[1] = 100*d[1]/d[1].max()
-        ax.plot(d[0], d[1], label=f[-12:-4])
+        # d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-8:-4])
     
-    ax.set_title(f.split('_')[2])
-    ax.set_ylabel('Rel. Intensity')
+    # ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Intensity')
     ax.set_xlabel('Drift time [ms]')
     plt.legend()
+    plt.tight_layout()
     plt.savefig(str(f[:-9]) + '_R2_plot.pdf')
-        
+
+#%% Figure 2 Sup4: Drift time distributions at 30, 60 and 90 V
+from itertools import groupby
+
+datadir = '../data/figure2/CIU_ADH_R1/OG_plots/'
+
+pairs = [list(i) for j,i in groupby(os.listdir(datadir),
+                                    lambda a: a[:-9])]
+for p in pairs:
+    fig = plt.figure(figsize=(3,3))
+    ax = plt.gca()
+    for f in p:
+        d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
+        # d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-8:-4])
+    
+    # ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Intensity')
+    ax.set_xlabel('Drift time [ms]')
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(str(f[:-9]) + '_R1_plot.pdf')
+
+
+datadir = '../data/figure2/CIU_ADH_R2/OG_plots/'
+
+pairs = [list(i) for j,i in groupby(os.listdir(datadir),
+                                    lambda a: a[:-9])]
+for p in pairs:
+    fig = plt.figure(figsize=(3,3))
+    ax = plt.gca()
+    for f in p:
+        d = np.genfromtxt(datadir+f, delimiter='\t', unpack=True)
+        # d[1] = 100*d[1]/d[1].max()
+        ax.plot(d[0], d[1], label=f[-8:-4])
+    
+    # ax.set_title(f.split('_')[2])
+    ax.set_ylabel('Intensity')
+    ax.set_xlabel('Drift time [ms]')
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(str(f[:-9]) + '_R2_plot.pdf')
